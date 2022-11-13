@@ -4,6 +4,7 @@ import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
+import axios from 'axios';
 
 
 export default function Signin() {
@@ -59,7 +60,6 @@ export default function Signin() {
       setDob(e.target.value);
     }
     const valid=()=>{
-      console.log("validating");
       if(s===1){setSucc("");}
         if(fn==="")
         {
@@ -117,24 +117,18 @@ export default function Signin() {
         else{
           setEmailer("");s=0;
         }
-        console.log("password checking");
         if(pass=="" )
         {
-          console.log("1");
-          console.log(passer);
           setPasser("*Password compulsory");
-          console.log(passer);
           s=1;
         }
         else if(passreg.test(pass)==false){
-          console.log(pass);
-          console.log(passer);
+        
           setPasser("*Wrong Password");s=1;
         }
         else
         {
-          console.log(pass);
-          console.log("hello",passreg.test(pass));
+          // console.log("hello",passreg.test(pass));
           setPasser("");s=0;
         }
         // else{
@@ -148,23 +142,13 @@ export default function Signin() {
         else if(pass!=conpass){
           setConpasser("*Password not matching");s=1;
         }
-        // else if(pass==conpass && passreg.test(pass)==false){
-        //   // if(pass==conpass)
-        //   // {
-        //   //   console.log('true');
-        //   //   console.log(passreg.test(pass));
-        //   // }
-        //   console.log(pass+conpass+passreg.test(pass));
-        //   setConpasser("Wrong Password!");s=1;
-        // }
-        
         else if(pass==conpass && passreg.test(pass)==true ){
 
           setConpasser("");s=0;
         }
-        if(s===0){setSucc("Succesful LogIn");}
         if(s===0)
         { 
+          Postd();
           setDisplay("Name:"+fn+" "+ln+" Email id:"+email);
           setFn("");
           setPass("");
@@ -175,6 +159,18 @@ export default function Signin() {
           setEmail("");
         }
         
+    }
+    const Postd=()=>{
+      console.log("posting")
+      axios.post('https://therecipepool.pythonanywhere.com/account/signup/',{
+        "email":email,
+        "password":pass,
+        "lastname":ln,
+        "firstname":fn,
+        "phone_number":num,
+        "gender":gender,
+        "DOB":dob
+      }).then(res=>console.log(res)).catch(err=>console.log(err))
     }
     const displ=()=>{
       console.log(s);
