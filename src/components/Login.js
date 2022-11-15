@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box, Button, Grid, Paper, TextField, Typography } from '@mui/material'
+import { Alert, Avatar, Box, Button, Grid, Paper, TextField, Typography, Stack } from '@mui/material'
 import { red } from '@mui/material/colors';
 import { color } from '@mui/system';
 import React from 'react'
@@ -8,6 +8,9 @@ import { green } from '@mui/material/colors';
 import Icon from '@mui/material/Icon';
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Logged_in from './Logged_in';
 export default function Login() {
   let s = 0;
 
@@ -16,6 +19,7 @@ export default function Login() {
   const [emailer, setEmailer] = useState("");
   const [passer, setPasser] = useState("");
   const [succ, setSucc] = useState("");
+  const [open, setOpen] = useState(false);
 
   const emreg = /[a-zA-Z0-9.%-_]{3,20}@[a-zA-Z]{2,10}[.]{1}[a-z]{2,5}/;
   const passreg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
@@ -29,28 +33,29 @@ export default function Login() {
     s = 0;
     if (s == 1) { setSucc(""); }
     if (email === "") {
-      setEmailer('*Email Id is required'); s = 1;
+      setEmailer('*Email Id is required'); s = 1;return false;
     }
     else if (emreg.test(email) === false) {
-      setEmailer('*Wrong type of Email Id'); s = 1;
+      setEmailer('*Wrong type of Email Id'); s = 1;return false;
 
     }
     else {
       setEmailer(""); s = 0;
     }
     if (pass == "") {
-      setPasser("*Password compulsory"); s = 1;
+      setPasser("*Password compulsory"); s = 1;return false;
     }
     // else if (passreg.test(pass) == false) {
-    //   setPasser("*Wrong Password"); s = 1;
+    //   setPasser("*Wrong Password"); s = 1;return false;
     // }
     else {
       setPasser(""); s = 0;
     }
-    if (s == 0) { setSucc("Succesful LogIn!!!!!!"); }
+     
     if (s === 0) {
       setPass("");
       setEmail("");
+      setOpen(true);
     }
 
     if (s == 0) {
@@ -58,6 +63,7 @@ export default function Login() {
     }
   }
   const logdata = () => {
+
     console.log(email, pass);
     var FormData = require('form-data');
     var data = new FormData();
@@ -72,7 +78,43 @@ export default function Login() {
 
     axios(config)
       .then(function (response) {
+        const k = response.data;
+        const v = JSON.stringify(response.data);
+        console.log(k);
+        localStorage.setItem('rt', k.refresh);
+        localStorage.setItem('at', k.access);
+        // console.log(localStorage.getItem('at'),typeof(localStorage.getItem('at')));
+        // console.log(localStorage.getItem('rt'),typeof(localStorage.getItem('rt')));
+        ref();
+        s = 0;
+      })
+      .catch(function (error) {
+        console.log(error); s = 0;
+        setOpen(false);
+      });
+  }
+  const ref = () => {
+    var FormData = require('form-data');
+    var data = new FormData();
+    data.append('refresh',localStorage.getItem('rt'));
+    var config = {
+      method: 'post',
+      url: 'https://therecipepool.pythonanywhere.com/account/token-refresh/',
+      headers: {
+        'Authorization': localStorage.getItem('at')
+        // ...data.getHeaders()
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        const k=response.data;
         console.log(JSON.stringify(response.data));
+        setSucc("Succesful LogIn!!!!!!");
+        localStorage.setItem('rt1', k.refresh);
+        localStorage.setItem('at1', k.access);
+        <Logged_in></Logged_in>
       })
       .catch(function (error) {
         console.log(error);
@@ -80,7 +122,17 @@ export default function Login() {
 
   }
 
-  const paperst = { padding: 10, height: '63vh', width: 360, margin: '20px', backgroundColor: "#7600a9", borderRadius: '24px' };
+
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const paperst = { padding: 10, height: '55vh', width: 360, margin: '20px', backgroundColor: "#7600a9", borderRadius: '24px' };
   const avatarstyle = { backgroundColor: 'black', width: 27, height: 27 };
   const sgn = { color: 'black' };
   const error = { color: 'red' };
@@ -115,6 +167,11 @@ export default function Login() {
                 <Button variant='contained' color='primary' size="small" sx={{ width: '120px' }} onClick={valid}>
                   LogIn
                 </Button><br />
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    This is a success message!
+                  </Alert>
+                </Snackbar>
               </Grid>
               <Grid item md={4}></Grid>
               <Grid item md={12}>

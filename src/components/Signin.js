@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 import axios from 'axios';
-import qs from 'qs';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 export default function Signin() {
   let s = 1;
@@ -62,49 +63,49 @@ export default function Signin() {
   const valid = () => {
     if (s === 1) { setSucc(""); }
     if (fn === "") {
-      setFner('*First Name is required'); s = 1;
+      setFner('*First Name is required'); s = 1;return false;
     }
     else if (nreg.test(fn) === false) {
-      setFner('*Enter correct Name'); s = 1;
+      setFner('*Enter correct Name'); s = 1;return false;
 
     }
     else {
       setFner(""); s = 0;
     }
     if (ln === "") {
-      setLner('*Last Name is required'); s = 1;
+      setLner('*Last Name is required'); s = 1;return false;
     }
     else if (nreg.test(ln) === false) {
-      setLner('*Enter correct Last Name'); s = 1;
+      setLner('*Enter correct Last Name'); s = 1;return false;
 
     }
     else {
       setLner(""); s = 0;
     }
     if (num === "") {
-      setPer('*Phone no. required'); s = 1;
+      setPer('*Phone no. required'); s = 1;return false;
     }
     else if (numreg.test(num) === false) {
-      setPer('*Enter valid phone no.'); s = 1;
+      setPer('*Enter valid phone no.'); s = 1;return false;
 
     }
     else {
       setPer(""); s = 0;
     }
     if (dob === '') {
-      setDober("*DOB required"); s = 1;
+      setDober("*DOB required"); s = 1;return false;
     }
     else if (dobreg.test(dob) === false) {
-      setDober("Enter correct DOB"); s = 1;
+      setDober("Enter correct DOB"); s = 1;return false;
     }
     else {
       setDober(""); s = 0;
     }
     if (email === "") {
-      setEmailer('*Email Id is required'); s = 1;
+      setEmailer('*Email Id is required'); s = 1;return false;
     }
     else if (emreg.test(email) === false) {
-      setEmailer('*Wrong type of Email Id'); s = 1;
+      setEmailer('*Wrong type of Email Id'); s = 1;return false;
 
     }
     else {
@@ -112,11 +113,11 @@ export default function Signin() {
     }
     if (pass == "") {
       setPasser("*Password compulsory");
-      s = 1;
+      s = 1;return false;
     }
     else if (passreg.test(pass) == false) {
 
-      setPasser("*Wrong Password"); s = 1;
+      setPasser("*Wrong Password"); s = 1;return false;
     }
     else {
       // console.log("hello",passreg.test(pass));
@@ -127,10 +128,10 @@ export default function Signin() {
     //   console.log(pass);
     // }
     if (conpass == "") {
-      setConpasser("*Pls Confirm the password"); s = 1;
+      setConpasser("*Pls Confirm the password"); s = 1;return false;
     }
     else if (pass != conpass) {
-      setConpasser("*Password not matching"); s = 1;
+      setConpasser("*Password not matching"); s = 1;return false;
     }
     else if (pass == conpass) {
 
@@ -195,7 +196,7 @@ axios(config)
       setDisp("");
     }
   }
-  const paperst = { padding: 10, height: '122vh', width: 520, margin: '20px', backgroundColor: "#7600a9", borderRadius: '24px' };
+  const paperst = { padding: 10, height: '105vh', width: 520, margin: '20px', backgroundColor: "#7600a9", borderRadius: '24px' };
   const avatarstyle = { backgroundColor: 'black', width: 27, height: 27 };
   const sgn = { color: 'black' };
   const error = { color: 'red' };

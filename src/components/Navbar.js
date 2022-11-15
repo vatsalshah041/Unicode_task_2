@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
@@ -12,7 +11,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useState,Grid} from 'react';
+import { useState,Grid,Typgography} from 'react';
 import { Link } from 'react-router-dom'
 
 const pages = ['Signup', 'SignIn'];
@@ -41,7 +40,8 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Link to='/'>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /></Link>
             <Link to='/Signin' style={{color:'white', padding:4}}>Signin</Link>
             <Link to='/LogIn'style={{color:'white'}}>LogIn</Link>
           {/* <Grid item md={4}>Sign in</Grid> */}
@@ -159,6 +159,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box> */}
+          {/* <Typgography variant='h1'>Welocme to Login,Sign Up</Typgography> */}
         </Toolbar>
       </Container>
     </AppBar>
