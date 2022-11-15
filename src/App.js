@@ -17,8 +17,9 @@ import Sign from './components/Sign';
 function App() {
   
   return (<>
-  {/* <Navbar/> */}
+  <Navbar/>
   <Navi/>
+
     <Routes>
       {/* <Route path='/' element={<Navi/>} /> */}
       <Route path='/LogIn' element={<Login/>} />

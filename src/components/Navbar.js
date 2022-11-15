@@ -42,7 +42,8 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Link to='/Signin'>Signin</Link>
+            <Link to='/Signin' style={{color:'white', padding:4}}>Signin</Link>
+            <Link to='/LogIn'style={{color:'white'}}>LogIn</Link>
           {/* <Grid item md={4}>Sign in</Grid> */}
           {/* <Typography
             variant="h6"
