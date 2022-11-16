@@ -11,6 +11,8 @@ import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Logged_in from './Logged_in';
+import { WindowSharp } from '@mui/icons-material';
+import { useHistory ,useLocation } from 'react-router-dom';
 export default function Login() {
   let s = 0;
 
@@ -33,17 +35,17 @@ export default function Login() {
     s = 0;
     if (s == 1) { setSucc(""); }
     if (email === "") {
-      setEmailer('*Email Id is required'); s = 1;return false;
+      setEmailer('*Email Id is required'); s = 1; return false;
     }
     else if (emreg.test(email) === false) {
-      setEmailer('*Wrong type of Email Id'); s = 1;return false;
+      setEmailer('*Wrong type of Email Id'); s = 1; return false;
 
     }
     else {
       setEmailer(""); s = 0;
     }
     if (pass == "") {
-      setPasser("*Password compulsory"); s = 1;return false;
+      setPasser("*Password compulsory"); s = 1; return false;
     }
     // else if (passreg.test(pass) == false) {
     //   setPasser("*Wrong Password"); s = 1;return false;
@@ -51,7 +53,7 @@ export default function Login() {
     else {
       setPasser(""); s = 0;
     }
-     
+
     if (s === 0) {
       setPass("");
       setEmail("");
@@ -96,7 +98,7 @@ export default function Login() {
   const ref = () => {
     var FormData = require('form-data');
     var data = new FormData();
-    data.append('refresh',localStorage.getItem('rt'));
+    data.append('refresh', localStorage.getItem('rt'));
     var config = {
       method: 'post',
       url: 'https://therecipepool.pythonanywhere.com/account/token-refresh/',
@@ -109,12 +111,20 @@ export default function Login() {
 
     axios(config)
       .then(function (response) {
-        const k=response.data;
+        const k = response.data;
         console.log(JSON.stringify(response.data));
         setSucc("Succesful LogIn!!!!!!");
         localStorage.setItem('rt1', k.refresh);
         localStorage.setItem('at1', k.access);
-        <Logged_in></Logged_in>
+        //window.location.href =window.location.origin+"/Logged_in";
+        // const location = useLocation()
+        // location.pathname
+          //<Link to='Logged_in'></Link>
+        // const history = useHistory()
+        // history.location.pathname
+        // let url=window.location.href.split('/');
+        // console.log(url[3]);
+        // console.log(typeof(window.location.origin));
       })
       .catch(function (error) {
         console.log(error);
