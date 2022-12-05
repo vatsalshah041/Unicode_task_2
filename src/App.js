@@ -15,6 +15,7 @@ import Signin from './components/Signin';
 import Sign1 from './components/Sign1';
 import Sign from './components/Sign';
 import Logged_in from './components/Logged_in';
+//import Menu from './components/Menu';
 function App() {
   
   return (<>
@@ -26,6 +27,7 @@ function App() {
       <Route path='/Signin' element={<Signin/>} />
       <Route path='/Sign' element={<Sign/>} />
       <Route path='/Logged_in' element={<Logged_in></Logged_in>}></Route>
+      {/* <Route path="/Menu" element={<Menu></Menu>}></Route> */}
     </Routes>
    
     {/* <Router>

@@ -116,7 +116,7 @@ export default function Login() {
         setSucc("Succesful LogIn!!!!!!");
         localStorage.setItem('rt1', k.refresh);
         localStorage.setItem('at1', k.access);
-        //window.location.href =window.location.origin+"/Logged_in";
+        window.location.href =window.location.origin+"/Logged_in";
         // const location = useLocation()
         // location.pathname
           //<Link to='Logged_in'></Link>
