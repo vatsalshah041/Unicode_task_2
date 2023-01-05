@@ -41,21 +41,19 @@ export default function Logged_in() {
     menu();
 
   }, [])
-  // const dinner = () => {
-  //   setType('dinner');
-  //   menu();
-  // }
-  // const lunch = () => {
-  //   setType('lunch');
-  //   menu();
-  //   //window.location.href =window.location.origin+"/Menu";
-  // }
-  // const breakfast = () => {
-  //   setType('breakfast');
-  //   menu();
-  //   //window.location.href =window.location.origin+"/Menu";
-  // }
-  const menu = (e) => {
+  const dinner = () => {
+    setType('dinner');
+    menu();
+  }
+  const lunch = () => {
+    setType('lunch');
+    menu();
+  }
+  const breakfast = () => {
+    setType('breakfast');
+    menu();
+  }
+const menu = async() => {
 var data = JSON.stringify({
   "meal": [
     type
@@ -72,12 +70,12 @@ var config = {
   data : data
 };
 
-axios(config)
+await axios(config)
 .then(function (response) {
   console.log((response.data));
   //console.log(e.target.value);
   setD(response.data);
-  console.log(d);
+  //console.log("hi",d);
 })
 .catch(function (error) {
   console.log(error);
@@ -85,7 +83,29 @@ axios(config)
 
   };
 
-
+  // const menu = async () => {
+  //   try {
+  //     await axios
+  //       .post(
+  //         "https://therecipepool.pythonanywhere.com/api/filter-meal/",
+  //         { meal: type },
+  //         {
+  //           headers: {
+  //             Authorization: "Bearer " + localStorage.getItem("at1"),
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       )
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         setD(response.data);
+  //         //console.log(d);
+  //       })
+  //       .catch((err) => console.log( err));
+  //   } catch (err) {
+  //     console.log( err);
+  //   }
+  // };
 
 
   return (
@@ -98,6 +118,7 @@ axios(config)
       <br></br>
       <div className='container'>
 
+      {d?<>yes</>:<>no</>}
         
       {/* {d[0].label} */}
 
